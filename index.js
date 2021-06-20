@@ -1,21 +1,46 @@
 const core = require('@actions/core');
-const wait = require('./wait');
 
+function execShellCommand(cmd) {
+  const exec = require('child_process').exec;
+  return new Promise((resolve) => {
+    exec(cmd, (error, stdout, stderr) => {
+      if (error) {
+        throw error
+      }
+      resolve(stdout ? stdout : stderr);
+    });
+  });
+}
 
-// most @actions toolkit packages have async methods
-async function run() {
+(async() => {
   try {
-    const ms = core.getInput('milliseconds');
-    core.info(`Waiting ${ms} milliseconds ...`);
+    const serviceName = core.getInput('name');
+    const bucket = core.getInput('bucket');
+    const version = process.env.VERSION
+    const gitmeta = core.getInput('gitmeta')
+    const meta = core.getInput('meta')
+    const metrics = core.getInput('metrics')
 
-    core.debug((new Date()).toTimeString()); // debug is only output if you set the secret `ACTIONS_RUNNER_DEBUG` to true
-    await wait(parseInt(ms));
-    core.info((new Date()).toTimeString());
+    console.log(`SAM build`);
+    await execShellCommand("sam build")
+    await execShellCommand(`sam package --template-file .aws-sam/build/template.yaml --s3-bucket ${bucket} --s3-prefix ${serviceName}/${version} --output-template-file packaged.yaml`)
 
-    core.setOutput('time', new Date().toTimeString());
+    console.log("Copy to S3")
+
+    await execShellCommand(`aws s3 cp packaged.yaml s3://${bucket}/${serviceName}/${version}/cf.yml`)
+
+    if (gitmeta) {
+      await execShellCommand(`aws s3 cp ${gitmeta} s3://${bucket}/${serviceName}/${version}/gitMeta`)
+    }
+    if (meta) {
+      await execShellCommand(`aws s3 cp ${meta} s3://${bucket}/${serviceName}/${version}/meta.yml`);
+    }
+
+    if (metrics) {
+      await execShellCommand(`aws s3 cp ${metrics} s3://${bucket}/${serviceName}/${version}/metrics.yml`)
+    }
+
   } catch (error) {
     core.setFailed(error.message);
   }
-}
-
-run();
+})();
