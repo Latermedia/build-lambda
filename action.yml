@@ -1,13 +1,30 @@
-name: 'Wait'
-description: 'Wait a designated number of milliseconds'
+# action.yml
+name: 'Git Meta'
+description: 'A simple Docker action to build the lambdas using SAM and copy the results into S3.'
 inputs:
-  milliseconds:  # id of input
-    description: 'number of milliseconds to wait'
+  version:
+    description: 'The version of the service'
     required: true
-    default: '1000'
-outputs:
-  time: # output will be available to future steps
-    description: 'The message to output'
+  name:
+    description: 'The name of the service'
+    required: true
+  bucket:
+    description: 'The name of the bucket to put the files into'
+    required: true
+    default: mavrck-builds
+  gitmeta:
+    description: 'Git meta file path'
+    required: true
+    default: git-meta
+  meta:
+    description: 'Meta file path'
+    required: true
+    default: meta.yml
+  metrics:
+    description: 'Metrics file path'
+    required: true
+    default: metrics.yml
+
 runs:
   using: 'node12'
   main: 'dist/index.js'
