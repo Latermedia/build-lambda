@@ -22,4 +22,5 @@ jobs:
     - uses: actions/checkout@v2
     - uses: ./
       with:
-        milliseconds: 1000
+        name: build-lambda
+        version: v1.0
