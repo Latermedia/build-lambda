@@ -24,6 +24,10 @@ inputs:
     description: 'Metrics file path'
     required: true
     default: metrics.yml
+  templateOutput:
+    description: 'Template output'
+    required: true
+    default: cf.yml
 
 runs:
   using: 'node12'

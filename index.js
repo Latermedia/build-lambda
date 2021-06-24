@@ -16,10 +16,11 @@ function execShellCommand(cmd) {
   try {
     const serviceName = core.getInput('name');
     const bucket = core.getInput('bucket');
-    const version = process.env.VERSION
-    const gitmeta = core.getInput('gitmeta')
-    const meta = core.getInput('meta')
-    const metrics = core.getInput('metrics')
+    const version = process.env.VERSION;
+    const gitmeta = core.getInput('gitmeta');
+    const meta = core.getInput('meta');
+    const metrics = core.getInput('metrics');
+    const templateOutput = core.getInput('templateOutput');
 
     console.log(`SAM build`);
     console.log(await execShellCommand("sam build"));
@@ -27,7 +28,7 @@ function execShellCommand(cmd) {
 
     console.log("Copy to S3")
 
-    console.log(await execShellCommand(`aws s3 cp packaged.yaml s3://${bucket}/${serviceName}/${version}/cf.yml`));
+    console.log(await execShellCommand(`aws s3 cp packaged.yaml s3://${bucket}/${serviceName}/${version}/${templateOutput}`));
 
     if (gitmeta) {
       console.log(await execShellCommand(`aws s3 cp ${gitmeta} s3://${bucket}/${serviceName}/${version}/gitMeta`));
