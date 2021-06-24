@@ -22,6 +22,8 @@ function execShellCommand(cmd) {
     const metrics = core.getInput('metrics');
     const templateOutput = core.getInput('templateOutput');
 
+    console.log(`\n\tService name: ${serviceName}\n\tBucket: ${bucket}\n\tVersion: ${version}\n\tGitmeta: ${gitmeta}\n\tMeta: ${meta}\n\tMetrics: ${metrics}\n\tTemplate Output: ${templateOutput}`)
+
     console.log(`SAM build`);
     console.log(await execShellCommand("sam build"));
     console.log(await execShellCommand(`sam package --template-file .aws-sam/build/template.yaml --s3-bucket ${bucket} --s3-prefix ${serviceName}/${version} --output-template-file packaged.yaml`));
