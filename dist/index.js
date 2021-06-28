@@ -28,7 +28,6 @@ function execShellCommand(cmd) {
 
     console.log(`\n\tService name: ${serviceName}\n\tBucket: ${bucket}\n\tVersion: ${version}\n\t`)
 
-    console.log(`SAM build`);
     console.log(await execShellCommand("sam build"));
     console.log(await execShellCommand(`sam package --template-file .aws-sam/build/template.yaml 
       --s3-bucket ${bucket} --s3-prefix ${serviceName}/${version} --output-template-file ${templateOutputFileName}`));
