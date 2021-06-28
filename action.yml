@@ -12,11 +12,10 @@ inputs:
     description: 'The name of the bucket to put the files into'
     required: true
     default: mavrck-builds
-  templateOutput:
-    description: 'Template output'
-    required: true
-    default: cf.yml
 
+outputs:
+  templateOutput:
+    description: 'File path to the generated template file'
 runs:
   using: 'node12'
   main: 'dist/index.js'
