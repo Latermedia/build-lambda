@@ -24,32 +24,16 @@ function execShellCommand(cmd) {
     const serviceName = core.getInput('name');
     const bucket = core.getInput('bucket');
     const version = process.env.VERSION;
-    const gitmeta = core.getInput('gitmeta');
-    const meta = core.getInput('meta');
-    const metrics = core.getInput('metrics');
-    const templateOutput = core.getInput('templateOutput');
+    const templateOutputFileName = 'packaged.yaml';
 
-    console.log(`\n\tService name: ${serviceName}\n\tBucket: ${bucket}\n\tVersion: ${version}\n\tGitmeta: ${gitmeta}\n\tMeta: ${meta}\n\tMetrics: ${metrics}\n\tTemplate Output: ${templateOutput}`)
+    console.log(`\n\tService name: ${serviceName}\n\tBucket: ${bucket}\n\tVersion: ${version}\n\t`)
 
     console.log(`SAM build`);
     console.log(await execShellCommand("sam build"));
-    console.log(await execShellCommand(`sam package --template-file .aws-sam/build/template.yaml --s3-bucket ${bucket} --s3-prefix ${serviceName}/${version} --output-template-file packaged.yaml`));
+    console.log(await execShellCommand(`sam package --template-file .aws-sam/build/template.yaml 
+      --s3-bucket ${bucket} --s3-prefix ${serviceName}/${version} --output-template-file ${templateOutputFileName}`));
 
-    console.log("Copy to S3")
-
-    console.log(await execShellCommand(`aws s3 cp packaged.yaml s3://${bucket}/${serviceName}/${version}/${templateOutput}`));
-
-    if (gitmeta) {
-      console.log(await execShellCommand(`aws s3 cp ${gitmeta} s3://${bucket}/${serviceName}/${version}/gitMeta`));
-    }
-    if (meta) {
-      console.log(await execShellCommand(`aws s3 cp ${meta} s3://${bucket}/${serviceName}/${version}/meta.yml`));
-    }
-
-    if (metrics) {
-      console.log(await execShellCommand(`aws s3 cp ${metrics} s3://${bucket}/${serviceName}/${version}/metrics.yml`));
-    }
-
+    core.setOutput('templateOutput', templateOutputFileName)
   } catch (error) {
     core.setFailed(error.message);
   }
