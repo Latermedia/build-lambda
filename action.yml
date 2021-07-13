@@ -13,7 +13,7 @@ inputs:
     required: true
     default: mavrck-builds
   use-container:
-    description: 'Whether to run sam with --use-container option'
+    description: 'Whether to run sam build with --use-container option'
     required: false
 
 outputs:
