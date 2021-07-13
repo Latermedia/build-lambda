@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/mavrck-inc/build-lambda-js/compare/1.1.0...1.2.0) (2021-07-13)
+
+
+### Features
+
+* **container:** Add use-container input ([e89ba07](https://github.com/mavrck-inc/build-lambda-js/commit/e89ba07d8a3688e2dd0c78718a896a0c80a7b6d6))
+
 # [1.1.0](https://github.com/mavrck-inc/build-lambda-js/compare/1.0.0...1.1.0) (2021-06-28)
 
 
