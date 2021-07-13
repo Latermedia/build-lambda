@@ -16,12 +16,18 @@ function execShellCommand(cmd) {
   try {
     const serviceName = core.getInput('name');
     const bucket = core.getInput('bucket');
+    const containerized = core.getInput('use-container');
     const version = process.env.VERSION;
     const templateOutputFileName = 'packaged.yaml';
 
     console.log(`\n\tService name: ${serviceName}\n\tBucket: ${bucket}\n\tVersion: ${version}\n\t`)
 
-    console.log(await execShellCommand("sam build"));
+    let buildCommand = "sam build";
+    if (containerized) {
+      buildCommand += " --use-container";
+    }
+
+    console.log(await execShellCommand(buildCommand));
     console.log(await execShellCommand(`sam package --template-file .aws-sam/build/template.yaml --s3-bucket ${bucket} --s3-prefix ${serviceName}/${version} --output-template-file ${templateOutputFileName}`));
 
     core.setOutput('templateOutput', templateOutputFileName)

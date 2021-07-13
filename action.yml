@@ -12,6 +12,9 @@ inputs:
     description: 'The name of the bucket to put the files into'
     required: true
     default: mavrck-builds
+  use-container:
+    description: 'Whether to run sam with --use-container option'
+    required: false
 
 outputs:
   templateOutput:
