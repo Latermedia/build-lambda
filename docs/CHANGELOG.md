@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/mavrck-inc/build-lambda-js/compare/1.2.0...1.3.0) (2021-07-15)
+
+
+### Features
+
+* **release:** Add custom sam-build-options ([48823a3](https://github.com/mavrck-inc/build-lambda-js/commit/48823a3b230cbf38b6ce37dbd61a8a13436955f3))
+
 # [1.2.0](https://github.com/mavrck-inc/build-lambda-js/compare/1.1.0...1.2.0) (2021-07-13)
 
 

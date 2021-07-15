@@ -24,6 +24,7 @@ function execShellCommand(cmd) {
     const serviceName = core.getInput('name');
     const bucket = core.getInput('bucket');
     const containerized = core.getInput('use-container');
+    const buildOptions = core.getInput('sam-build-options');
     const version = process.env.VERSION;
     const templateOutputFileName = 'packaged.yaml';
 
@@ -32,6 +33,9 @@ function execShellCommand(cmd) {
     let buildCommand = "sam build";
     if (containerized) {
       buildCommand += " --use-container";
+    }
+    if (buildOptions) {
+      buildCommand += " " + buildOptions;
     }
 
     console.log(await execShellCommand(buildCommand));
