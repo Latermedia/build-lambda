@@ -15,6 +15,10 @@ inputs:
   use-container:
     description: 'Whether to run sam build with --use-container option'
     required: false
+    deprecationMessage: 'Deprecated in favor of more generic sam-build-options input'
+  sam-build-options:
+    description: 'Extra options for sam build command'
+    required: false
 
 outputs:
   templateOutput:
