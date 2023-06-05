@@ -1,12 +1,20 @@
-name: "release"
+name: Build
+
 on:
   push:
+    paths-ignore:
+      - 'README.md'
+      - 'deploy/**'
+      - '.gitignore'
     branches:
-      - main
+      - '**'
+    tags-ignore:
+      - '**'
+  workflow_dispatch:
 
 jobs:
-  # unit tests
-  release:
+  build:
+    name: Build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
