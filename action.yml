@@ -11,7 +11,7 @@ inputs:
   bucket:
     description: 'The name of the bucket to put the files into'
     required: true
-    default: mavrck-builds
+    default: mavrck-build-artifacts
   use-container:
     description: 'Whether to run sam build with --use-container option'
     required: false
