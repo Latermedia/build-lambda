@@ -19,6 +19,9 @@ inputs:
   sam-build-options:
     description: 'Extra options for sam build command'
     required: false
+  sam-package-options:
+    description: 'Extra options for sam package command'
+    required: false
 
 outputs:
   templateOutput:
